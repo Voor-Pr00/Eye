@@ -1,0 +1,6 @@
+local player = game.Players.LocalPlayer
+local mainGame = require(player.PlayerGui.MainUI.Initiator.Main_Game)
+local screechModule =
+require(player.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech)
+
+screechModule(mainGame)
