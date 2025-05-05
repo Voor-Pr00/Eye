@@ -16,7 +16,7 @@ sound:Play()
 wait(1.5)
 task.spawn(function()
     while Kill == true do
-        task.wait(0.5)
+        task.wait(0.1)
         local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(eyes.Position)
         if camera then
                 game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1.1)
