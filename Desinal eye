@@ -1,0 +1,40 @@
+local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
+local camera = game.Workspace.CurrentCamera
+local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
+camera.CFrame = camera.CFrame * shakeCf
+end)
+camShake:Start()
+camShake:ShakeOnce(10, 18, 0.1, 2, 10,10)
+
+local Kill = true
+local eye = game:GetObjects("rbxassetid://134996330348812")[1]
+eye.Parent = game.Workspace
+local eyes = eye:FindFirstChildWhichIsA("BasePart") or eye:FindFirstChildWhichIsA("Part")
+eyes.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Door.Door.CFrame + Vector3.new(0,0,0)
+
+wait(3)
+task.spawn(function()
+    while Kill == true do
+        task.wait(0.01)
+        local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(eyes.Position)
+        if camera then
+                game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1.1)
+        end
+    if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
+                game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dimensional Eye"
+    end
+   end
+end)
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+Kill = false
+eye:Destroy()
+-- Load achievement giver
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+-- Display achievement
+achievementGiver({
+    Title = "The Demon Eye",
+    Desc = "LOOK AT ME",
+    Reason = "Encounter and survival from Dimensional Eye",
+    Image = "rbxassetid://80115740584014"
+})
