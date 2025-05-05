@@ -2,7 +2,7 @@ local Kill = true
 local eye = game:GetObjects("rbxassetid://10859379907")[1]
 eye.Parent = game.Workspace
 local eyes = eye:FindFirstChildWhichIsA("BasePart") or eye:FindFirstChildWhichIsA("Part")
-eyes.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
+eyes.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,8,0)
 
 local sound = Instance.new("Sound")
 sound.Parent = eyes
