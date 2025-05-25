@@ -1,0 +1,76 @@
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Voorproo/Fogroom/refs/heads/main/Roomm"))()
+---====== Create entity ======---
+
+local entity = spawner.Create({
+	Entity = {
+		Name = "Smiley",
+		Asset = "rbxassetid://101667311069241",
+		HeightOffset = 1
+	},
+	Lights = {
+		Flicker = {
+			Enabled = true,
+			Duration = 2
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = false,
+		Range = 10,
+		Values = {15.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 15,
+		Delay = 5,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = true,
+		Type = "Ambush",
+		Min = 1,
+		Max = 1,
+		Delay = 0.01 
+	},
+	Damage = {
+		Enabled = true,
+		Range = 50,
+		Amount = 0.001
+	},
+	Crucifixion = {
+		Enabled = false,
+		Range = 85,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"Death", "Hints", "Go", "Here"},
+		Cause = ""
+	}
+})
+
+---====== Debug entity ======---
+
+entity:SetCallback("OnSpawned", function()
+    print("Entity has spawned")
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+game.Workspace.Smiley:Destroy()
+end)
+
+entity:SetCallback("OnDamagePlayer", function(newHealth)
+	if newHealth == 0 then
+		print("Entity has killed the player")
+	else
+		print("Entity has damaged the player")
+game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid"):TakeDamage(1000)
+end
+
+game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Smiley"
+end)
+
+---====== Run entity ======---
+entity:Run()
