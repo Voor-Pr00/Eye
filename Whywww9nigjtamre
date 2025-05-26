@@ -24,8 +24,8 @@ local entity = spawner.Create({
 		Values = {15.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
 	},
 	Movement = {
-		Speed = 20,
-		Delay = 5,
+		Speed = 23,
+		Delay = 17,
 		Reversed = false
 	},
 	Rebounding = {
@@ -60,8 +60,11 @@ entity:SetCallback("OnSpawned", function()
 game.Lighting.Ambient = Color3.fromRGB(30,0,255)
 game:GetService("TweenService"):Create(game.Lighting, TweenInfo.new(1.5), {Ambient = Color3.fromRGB(30, 0, 255)}):Play()
 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-game.Workspace.Nightmare_Smiley:Destroy()
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("THIS IS YOUR FEAR",true)wait(3) 
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("I WILL KILL YOu..- ? = ()",true)wait(3) 
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("ThAt Is Y0u F+ar ??????",true)wait(3) 
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Why Y0u alway Hide?!",true)wait(3) 
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("IM COMMING AND KILLL YOU ",true)wait(3) 
 end)
 
 entity:SetCallback("OnDamagePlayer", function(newHealth)
