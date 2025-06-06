@@ -1,3 +1,66 @@
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Voorproo/Fogroom/refs/heads/main/Wwwhyyyyil"))()
+local Kill = true
+local entity = spawner.Create({
+	Entity = {
+		Name = "ues",
+		Asset = "rbxassetid://134996330348812",
+		HeightOffset = 0
+	},
+	Lights = {
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = true,
+		Range = 100,
+		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 0.001,
+		Delay = 0,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = false,
+		Type = "Ambush", -- "Blitz"
+		Min = 1,
+		Max = 1,
+		Delay = 2
+	},
+	Damage = {
+		Enabled = false,
+		Range = 40,
+		Amount = 125
+	},
+	Crucifixion = {
+		Enabled = true,
+		Range = 60,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"Death", "Hints", "Go", "Here"},
+		Cause = ""
+	}
+})
+
+---====== Debug entity ======---
+
+entity:SetCallback("OnSpawned", function()
+
+function GetRoom()
+        local gruh = workspace.CurrentRooms
+        return gruh:FindFirstChild(game.ReplicatedStorage.GameData.LatestRoom.Value)
+end
+
 local CameraShaker = require(game.ReplicatedStorage.CameraShaker)
 local camera = game.Workspace.CurrentCamera
 local camShake = CameraShaker.new(Enum.RenderPriority.Camera.Value, function(shakeCf)
@@ -6,35 +69,29 @@ end)
 camShake:Start()
 camShake:ShakeOnce(10, 18, 0.1, 2, 10,10)
 
-local Kill = true
-local eye = game:GetObjects("rbxassetid://134996330348812")[1]
-eye.Parent = game.Workspace
-local eyes = eye:FindFirstChildWhichIsA("BasePart") or eye:FindFirstChildWhichIsA("Part")
+local eyes = game.Workspace.ues:FindFirstChildWhichIsA("BasePart")
 eyes.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Door.Door.CFrame + Vector3.new(0,0,0)
 
 wait(3)
 task.spawn(function()
     while Kill == true do
         task.wait(0.02)
-        local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(eyes.Position)
+
+ local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(game.Workspace.ues:FindFirstChildWhichIsA("BasePart").Position)
         if camera then
                 game.Players.LocalPlayer.Character.Humanoid:TakeDamage(1.01)
-        end
-    if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
                 game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Dimensional Eye"
     end
    end
 end)
+
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 Kill = false
-eye:Destroy()
--- Load achievement giver
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+game.Workspace.ues:Destroy()
 
--- Display achievement
-achievementGiver({
-    Title = "The Demon Eye",
-    Desc = "LOOK AT ME",
-    Reason = "Encounter and survival from Dimensional Eye",
-    Image = "rbxassetid://80115740584014"
-})
+end)
+
+---====== Run entity ======---
+
+entity:Run()
+
