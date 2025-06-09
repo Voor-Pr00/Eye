@@ -1,17 +1,74 @@
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Voorproo/Fogroom/refs/heads/main/Wwwhyyyyil"))()
 local damages = true
 local tweenservice = game:GetService("TweenService")
 local plr = game.Players.LocalPlayer
 local chr = plr.Character
+local entity = spawner.Create({
+	Entity = {
+		Name = "ee",
+		Asset = "rbxassetid://107939368264641",
+		HeightOffset = 0
+	},
+	Lights = {
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = false,
+		Range = 100,
+		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 0.001,
+		Delay = 0,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = false,
+		Type = "Ambush", -- "Blitz"
+		Min = 1,
+		Max = 1,
+		Delay = 2
+	},
+	Damage = {
+		Enabled = false,
+		Range = 40,
+		Amount = 125
+	},
+	Crucifixion = {
+		Enabled = true,
+		Range = 60,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"Death", "Hints", "Go", "Here"},
+		Cause = ""
+	}
+})
 
-local model = game:GetObjects("rbxassetid://107939368264641")[1]
-model.Parent = game.Workspace
-local models = model:FindFirstChildWhichIsA("BasePart") or model:FindFirstChildWhichIsA("Part")
+---====== Debug entity ======---
+
+entity:SetCallback("OnSpawned", function()
+
+function GetRoom()
+        local gruh = workspace.CurrentRooms
+        return gruh:FindFirstChild(game.ReplicatedStorage.GameData.LatestRoom.Value)
+end
+
+local model = game.Workspace.ee
+local models = game.Workspace.ee:FindFirstChildWhichIsA("BasePart") or game.Workspace.ee:FindFirstChildWhichIsA("Part")
 models.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,8,0)
 
-game.Workspace.CurrentRooms.ChildAdded:Connect(function()
-damages = false
-model:Destroy()
-end)
+local ultimaroom = game.ReplicatedStorage.GameData.LatestRoom.Value
 
 task.spawn(function()
 	while damages == true do
@@ -24,6 +81,15 @@ task.spawn(function()
 	if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
       game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Greed"
     end
-
+if game.Workspace:FindFirstChild("RepentanceNEW") or ultimaroom ~= game.ReplicatedStorage.GameData.LatestRoom.Value then
+damages = false
+model:Destroy()
+end
     end
 end)
+
+end)
+
+---====== Run entity ======---
+
+entity:Run()
